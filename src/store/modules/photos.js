@@ -17,6 +17,10 @@ const actions = {
 
         commit('setPhotos', responseJson.results);
     };
+
+    updateStateSearchParam({commit}, param) {
+        commit('setSearchParam', param);
+    };
 };
 
 const mutations = {
