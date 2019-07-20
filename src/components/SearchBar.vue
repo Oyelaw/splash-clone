@@ -9,11 +9,15 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "SearchBar",
   methods: {
-    ...mapActions("Photos", ["updateStateSearchParam"]),
+    ...mapActions("Photos", [
+      "updateStateSearchParam",
+      "updateStatus",
+      "clearState"
+    ]),
     // Onclick dispatch action to update the search param in state and transition to result screen
     onSubmit(e) {
       //prevent page from reloading
@@ -21,6 +25,8 @@ export default {
 
       if (this.search) {
         this.updateStateSearchParam(this.search);
+        this.clearState();
+        this.updateStatus("pending");
         // transit to search screen
         this.$router.push({ path: "/search" });
       }

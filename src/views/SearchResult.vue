@@ -9,8 +9,8 @@
         v-else-if="this.status === 'loaded'"
         class="search-header"
       >Search Results for '{{this.searchParam}}'</div>
-      <div v-else-if="this.status === 'Error'" class="search-header">
-        Unable to find results for
+      <div v-else-if="this.status === 'error'" class="search-header">
+        Unable to find Results for
         <span class="key-word">'{{this.searchParam}}'</span>. Check your internet connection
       </div>
     </SearchHeader>
@@ -20,7 +20,6 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import Header from "../components/Header";
 import PhotosList from "../components/PhotoList";
 import SearchHeader from "../components/SearchHeader";
 export default {
@@ -30,13 +29,15 @@ export default {
     SearchHeader
   },
   methods: {
-    ...mapActions("Photos", ["fetchPhotos"])
+    ...mapActions("Photos", ["fetchPhotos", "updateStatus", "clearState"])
   },
   created() {
     let query = this.searchParam;
-    console.log("SEarch result created with param", query);
-
     this.fetchPhotos({ query });
+  },
+  beforeDestroy() {
+    this.clearState();
+    this.updateStatus("pending");
   },
   computed: {
     ...mapState("Photos", ["searchParam", "status"])
@@ -52,9 +53,14 @@ export default {
   height: 100%;
   display: flex;
   justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Arial;
 }
 .key-word {
-  font-weight: bold;
+  font-weight: 400;
   margin-left: 4px;
+  text-transform: capitalize;
+  opacity: 0.8;
 }
 </style>
