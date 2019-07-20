@@ -48,11 +48,11 @@ export default {
 <style lang="scss" scoped>
 .search-header {
   padding: 30px 100px;
-  align-items: center;
+  align-items: left;
   height: 60px;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   font-size: 30px;
   font-weight: bold;
   font-family: Arial;

@@ -17,7 +17,7 @@
             <span class="text text-name">{{photo.user.first_name}}{{photo.user.last_name}}</span>
             <span class="text text-location">{{photo.user.location}}</span>
           </div>
-          <img :src="photo.urls.thumb" />
+          <img @click="modalClicked()" :src="photo.urls.thumb" />
         </div>
       </div>
     </div>
@@ -36,7 +36,15 @@ export default {
     ...mapState("Photos", ["photos", "status"])
   },
   methods: {
-    ...mapActions("Photos", [])
+    ...mapActions("Photos", []),
+    modalClicked() {
+      console.log("image clicked");
+    }
+  },
+  data() {
+    return {
+      showModal: false
+    };
   }
 };
 </script>
@@ -84,15 +92,39 @@ export default {
 
 .skeleton {
   position: relative;
-  background: rgb(225, 233, 235);
+  background: #ddd;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(#fff, 0) 0,
+      rgba(#fff, 0.2) 20%,
+      rgba(#fff, 0.5) 60%,
+      rgba(#fff, 0)
+    );
+    animation: shimmer 5s infinite;
+    content: "";
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
   .text {
     height: 10px;
     width: 60%;
-    background: rgb(116, 185, 197);
+    background: #e8e8e8;
     margin: 0 0 20px 10px;
   }
 
