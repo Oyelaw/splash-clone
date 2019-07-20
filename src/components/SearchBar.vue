@@ -9,8 +9,13 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "SearchBar",
+  methods: {
+    ...mapActions(["updateStateSearchParam"])
+    // Onclick dispatch action to update the search param in state and transition to result screen
+  },
   data() {
     return {
       search: ""
