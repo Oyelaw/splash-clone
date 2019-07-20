@@ -1,24 +1,29 @@
 <template>
   <div class="container">
-    <div class="grid">
-      <div v-for="photo in photos" :key="photo.id" class="holder">
-        <img :src="photo.urls.thumb" />
+    <div v-if="this.status === 'pending'">Loading</div>
+    <div v-else-if="this.status === 'loaded'">
+      <div class="grid">
+        <div v-for="photo in photos" :key="photo.id" class="holder">
+          <img :src="photo.urls.thumb" />
+        </div>
       </div>
     </div>
+    <div
+      v-else-if="this.status === 'Error'"
+    >Unable to fetch Pictures. Check your internet connection</div>
   </div>
 </template>
 
+
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
-  created() {
-    this.fetchPhotos();
-  },
+  name: "PhotoList2",
   computed: {
-    ...mapState("Photos", ["photos"])
+    ...mapState("Photos", ["photos", "status"])
   },
   methods: {
-    ...mapActions("Photos", ["fetchPhotos"])
+    ...mapActions("Photos", [])
   }
 };
 </script>

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Header from "../components/Header";
 import PhotosList from "../components/PhotoList";
 
@@ -14,6 +15,12 @@ export default {
   components: {
     Header,
     PhotosList
+  },
+  methods: {
+    ...mapActions("Photos", ["fetchPhotos"])
+  },
+  created() {
+    this.fetchPhotos();
   }
 };
 </script>
