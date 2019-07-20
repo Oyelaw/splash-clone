@@ -21,6 +21,8 @@ const actions = {
       const responseJson = await response.json();
 
       commit("setPhotos", responseJson.results);
+      console.log("res", responseJson.results);
+
       commit("setStatus", "loaded");
     } catch (e) {
       //   console.log("Error", e);

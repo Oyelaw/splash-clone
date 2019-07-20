@@ -5,7 +5,7 @@
         <div v-for="(n, index) in 8" :key="index" class="holder skeleton">
           <div class="overlay">
             <span class="text text-name"></span>
-            <span class="text text-location"></span>
+            <span class="text"></span>
           </div>
         </div>
       </div>
@@ -13,6 +13,10 @@
     <div v-else-if="this.status === 'loaded'">
       <div class="grid">
         <div v-for="photo in photos" :key="photo.id" class="holder">
+          <div class="overlay nameAndLocation">
+            <span class="text text-name">{{photo.user.first_name}}{{photo.user.last_name}}</span>
+            <span class="text text-location">{{photo.user.location}}</span>
+          </div>
           <img :src="photo.urls.thumb" />
         </div>
       </div>
@@ -27,12 +31,19 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-  name: "PhotoList2",
+  name: "PhotoList",
   computed: {
     ...mapState("Photos", ["photos", "status"])
   },
   methods: {
-    ...mapActions("Photos", [])
+    ...mapActions("Photos", []),
+    setBackgroundColor(color) {
+      if (lightness(color) > 40) {
+        return black;
+      } else {
+        return white;
+      }
+    }
   }
 };
 </script>
@@ -70,6 +81,14 @@ export default {
   }
 }
 
+.nameAndLocation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 15px 0 15px 25px;
+}
+
 .skeleton {
   position: relative;
   background: rgb(225, 233, 235);
@@ -79,43 +98,42 @@ export default {
 
   .text {
     height: 10px;
-    width: 150px;
+    width: 60%;
     background: rgb(116, 185, 197);
     margin: 0 0 20px 10px;
   }
 
   .text-name {
-    width: 250px;
+    width: 70%;
   }
 }
 
 .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   opacity: 1;
-  transition: 0.5s ease;
-  color: grey;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  flex-direction: column-reverse;
+}
 
-  .text {
-    font-weight: 900;
-    opacity: 0.8;
-    color: white;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    font-size: 40px;
-  }
+.text {
+  font-weight: 500;
+  opacity: 1;
+  color: white;
+}
 
-  .text-name {
-    font-size: 35px;
-  }
+.text-name {
+  font-size: 20px;
+}
 
-  .text-location {
-    font-size: 5px;
+.text-location {
+  font-size: 15px;
+}
+
+@function set-text-color($color) {
+  @if (lightness($color) > 40) {
+    @return #000;
+  } @else {
+    @return #fff;
   }
 }
 </style>

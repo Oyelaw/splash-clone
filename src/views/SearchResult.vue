@@ -1,14 +1,14 @@
 <template>
   <div>
     <SearchHeader>
-      <div
-        v-if="this.status === 'pending'"
-        class="search-header"
-      >Searching for '{{this.searchParam}}'</div>
-      <div
-        v-else-if="this.status === 'loaded'"
-        class="search-header"
-      >Search Results for '{{this.searchParam}}'</div>
+      <div v-if="this.status === 'pending'" class="search-header">
+        Searching for
+        <span class="key-word">'{{this.searchParam}}'</span>.
+      </div>
+      <div v-else-if="this.status === 'loaded'" class="search-header">
+        Search Results for
+        <span class="key-word">'{{this.searchParam}}'</span>.
+      </div>
       <div v-else-if="this.status === 'error'" class="search-header">
         Unable to find Results for
         <span class="key-word">'{{this.searchParam}}'</span>. Check your internet connection
@@ -58,7 +58,7 @@ export default {
   font-family: Arial;
 }
 .key-word {
-  font-weight: 400;
+  font-weight: 100;
   margin-left: 4px;
   text-transform: capitalize;
   opacity: 0.8;
