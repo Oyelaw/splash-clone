@@ -36,14 +36,7 @@ export default {
     ...mapState("Photos", ["photos", "status"])
   },
   methods: {
-    ...mapActions("Photos", []),
-    setBackgroundColor(color) {
-      if (lightness(color) > 40) {
-        return black;
-      } else {
-        return white;
-      }
-    }
+    ...mapActions("Photos", [])
   }
 };
 </script>
@@ -127,13 +120,5 @@ export default {
 
 .text-location {
   font-size: 15px;
-}
-
-@function set-text-color($color) {
-  @if (lightness($color) > 40) {
-    @return #000;
-  } @else {
-    @return #fff;
-  }
 }
 </style>
