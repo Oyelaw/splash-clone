@@ -1,7 +1,7 @@
 <template>
   <div class="search-div">
-    <form class="search-form">
-      <a-input size="large" placeholder="Search for photo" v-model="search">
+    <form class="search-form" @submit="onSubmit">
+      <a-input size="large" placeholder="Search for photo" v-model="search" name="search">
         <a-icon slot="prefix" type="search" />
       </a-input>
     </form>
@@ -9,12 +9,22 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "SearchBar",
   methods: {
-    ...mapActions(["updateStateSearchParam"])
+    ...mapActions("Photos", ["updateStateSearchParam"]),
     // Onclick dispatch action to update the search param in state and transition to result screen
+    onSubmit(e) {
+      //prevent page from reloading
+      e.preventDefault();
+
+      if (this.search) {
+        this.updateStateSearchParam(this.search);
+        // transit to search screen
+        this.$router.push({ path: "/search" });
+      }
+    }
   },
   data() {
     return {

@@ -22,7 +22,7 @@ const actions = {
     commit("setPhotos", responseJson.results);
   },
 
-  updateStateSearchParam({ commit }, param) {
+  async updateStateSearchParam({ commit }, param) {
     commit("setSearchParam", param);
   }
 };
