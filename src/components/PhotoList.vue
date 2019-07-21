@@ -17,34 +17,43 @@
             <span class="text text-name">{{photo.user.first_name}}{{photo.user.last_name}}</span>
             <span class="text text-location">{{photo.user.location}}</span>
           </div>
-          <img @click="modalClicked()" :src="photo.urls.thumb" />
+          <img @click.prevent="showModal(photo)" :src="photo.urls.thumb" />
         </div>
       </div>
     </div>
     <div
       v-else-if="this.status === 'error'"
     >Unable to fetch Pictures. Check your internet connection</div>
+    <modal v-show="isModalVisible" @close="closeModal" :selectedImage="modalPicture"></modal>
   </div>
 </template>
 
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Modal from "./Modal";
 export default {
   name: "PhotoList",
+  components: {
+    Modal
+  },
   computed: {
     ...mapState("Photos", ["photos", "status"])
   },
-  methods: {
-    ...mapActions("Photos", []),
-    modalClicked() {
-      console.log("image clicked");
-    }
-  },
   data() {
     return {
-      showModal: false
+      modalPicture: null,
+      isModalVisible: false
     };
+  },
+  methods: {
+    showModal(photo) {
+      this.modalPicture = photo;
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    }
   }
 };
 </script>
