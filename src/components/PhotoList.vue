@@ -13,7 +13,7 @@
     <div v-else-if="this.status === 'loaded'">
       <div class="grid">
         <div v-for="photo in photos" :key="photo.id" class="holder">
-          <div class="overlay nameAndLocation">
+          <div class="nameAndLocation caption">
             <span class="text text-name">{{photo.user.first_name}}{{photo.user.last_name}}</span>
             <span class="text text-location">{{photo.user.location}}</span>
           </div>
@@ -92,7 +92,7 @@ export default {
 }
 
 .nameAndLocation {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -161,5 +161,20 @@ export default {
 
 .text-location {
   font-size: 15px;
+}
+
+.caption {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  color: #333;
+  margin: 0;
+  color: white;
+  letter-spacing: -1px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: initial;
 }
 </style>
